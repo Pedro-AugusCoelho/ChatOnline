@@ -1,0 +1,19 @@
+// Font-Family
+$font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+// Themes
+$bg-white: #FFF;
+$bg-gray-25: #F6F6F6;
+$bg-gray-50: #EDEDED;
+$bg-gray-100: #D2DBDC;
+
+*{
+    box-sizing: border-box;
+    padding: 0;
+}
+
+body{
+    background-color: $bg-gray-100;
+    margin: 0;
+    font-family: $font-main;
+}
