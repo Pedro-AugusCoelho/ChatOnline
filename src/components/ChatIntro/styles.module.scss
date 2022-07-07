@@ -1,0 +1,30 @@
+.ChatIntro{
+    background-color: #F8F9FA;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    text-align: center;
+    padding: 1rem;
+    border-bottom: 0.150rem solid #4ADF83;
+    img{
+        width: 250px;
+        height: 250px;
+
+    }
+    h2{
+        font-size: 2rem;
+        color:#525252;
+        font-weight: normal;
+        margin-top: 2rem;
+    }
+    h3{
+        font-size: 1rem;
+        color:#777;
+        font-weight: normal;
+        margin-top: 1rem;
+        line-height: 1rem;
+    }
+}
+

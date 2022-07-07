@@ -3,22 +3,27 @@ import styles from './styles.module.scss';
 
 export const ChatListItem = () => {
     
-    const {chatList} = useChatOnline();
+    const {chatList , handleActiveChat , activeChat } = useChatOnline();
     
     return(
         <div className={styles.chatList}>
             
             {chatList.map((item , k) => (
-                <div key={k} className={styles.chatListItem}>
+                <div 
+                    key={k}
+                    className={`${styles.chatListItem} ${item.chatId === activeChat.chatId ? styles.active : ''}`} 
+                    onClick={() => handleActiveChat(chatList[k])}
+                >
+                    
                     <img 
-                    src='https://images.vexels.com/media/users/3/145908/raw/52eabf633ca6414e60a7677b0b917d92-criador-de-avatar-masculino.jpg' 
+                    src={item.avatar} 
                     alt='Avatar' 
                     className={styles.chatListItemAvatar} />
                 
                     <div className={styles.chatListItemLines}>
                         
                         <div className={styles.chatListItemLine}>
-                            <div className={styles.chatListItemName}>Pedro Augusto</div>
+                            <div className={styles.chatListItemName}>{item.title}</div>
                             <div className={styles.chatListItemDate}>19:00</div>
                         </div>
 
