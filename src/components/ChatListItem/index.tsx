@@ -3,16 +3,16 @@ import styles from './styles.module.scss';
 
 export const ChatListItem = () => {
     
-    const {chatList , handleActiveChat , activeChat } = useChatOnline();
+    const {ProfilechatList , handleActiveChat , activeChat } = useChatOnline();
     
     return(
         <div className={styles.chatList}>
             
-            {chatList.map((item , k) => (
+            {ProfilechatList.map((item , k) => (
                 <div 
                     key={k}
                     className={`${styles.chatListItem} ${item.chatId === activeChat.chatId ? styles.active : ''}`} 
-                    onClick={() => handleActiveChat(chatList[k])}
+                    onClick={() => handleActiveChat(ProfilechatList[k])}
                 >
                     
                     <img 

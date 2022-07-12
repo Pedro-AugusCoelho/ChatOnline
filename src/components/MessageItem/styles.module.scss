@@ -1,0 +1,27 @@
+.menssageLine{
+    margin-bottom: 1rem;
+    display: flex;
+
+}
+.menssageItem{
+    background-color: #FFF;
+    border-radius: .625rem;
+    box-shadow:  0 1px 1px #CCC;
+    display: flex;
+    flex-direction: column;
+    padding: .25rem;
+    max-width: 90%;
+}
+.menssageText{
+    font-size: 14px;
+    margin: 5px 40px 5px 5px;
+
+}
+.menssageDate{
+    font-size: 11px;
+    color:#999;
+    margin-right: 5px;
+    text-align: right;
+    height: 15px;
+    margin-top: -15px;
+}

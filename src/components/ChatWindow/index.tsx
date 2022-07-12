@@ -1,24 +1,33 @@
+//Styles
 import styles from './styles.module.scss';
+
+//Libs
 import EmojiPicker from 'emoji-picker-react';
 
+//Icons
 import SearchIcon from '@mui/icons-material/Search';
 import AttachFileIcon from '@material-ui/icons/AttachFile';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
 import CloseIcon from '@material-ui/icons/Close';
 import SendIcon from '@material-ui/icons/Send';
-import MicIcon from '@material-ui/icons/Mic';
+
+//Hooks
 import { useState } from 'react';
 
+//Components
+import { MessageItem } from '../MessageItem';
 
+//Types
+import { EmojiType } from '../../types';
 
 export const ChatWindow = () => {
 
-    const [chosenEmoji, setChosenEmoji] = useState('');
+    const [text , setText ] = useState('');
     const [emojiOpen, setEmojiOpen] = useState(false);
     
-    const handleEmojiClick = () => {
-        setChosenEmoji('grinning face, grinning');
+    const handleEmojiClick = (e:any,emojiObject:EmojiType) => {
+        setText(text + emojiObject.emoji);
     }
 
     const handleOpenEmoji = () => {
@@ -27,6 +36,10 @@ export const ChatWindow = () => {
 
     const handleCloseEmoji = () => {
         setEmojiOpen(false);
+    }
+
+    const handleSendClick = () => {
+        //
     }
     
     return(
@@ -58,7 +71,7 @@ export const ChatWindow = () => {
             </div>
             
             <div className={styles.chatWindowBody}>
-
+                <MessageItem/>
             </div>
 
             <div 
@@ -68,6 +81,8 @@ export const ChatWindow = () => {
                     onEmojiClick={handleEmojiClick}
                     disableAutoFocus
                     disableSkinTonePicker
+                    disableSearchBar
+                    pickerStyle={{width:'auto'}}
                 />
             </div>
             
@@ -96,15 +111,17 @@ export const ChatWindow = () => {
                         type='text' 
                         className={styles.input} 
                         placeholder='Digite uma menssagem'
+                        value={text}
+                        onChange={e => setText(e.target.value)}
                     />
                 </div>
                 
                 <div className={styles.FooterPos}>
                     
-                    <div className={styles.Btn}>
+                    <div onClick={handleSendClick} className={styles.Btn}>
                         <SendIcon style={{color:'#919191'}} />
                     </div>
-                
+                    
                 </div>
             
             </div>
