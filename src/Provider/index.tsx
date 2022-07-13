@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { ProfileChat } from '../types';
+import { Menssage, ProfileChat, User } from '../types';
 
 
 interface ChatOnlineProps {
@@ -9,9 +9,12 @@ interface ChatOnlineProps {
 interface ChatOnlineContextData {
     ProfilechatList:ProfileChat[],
     activeChat:ProfileChat,
-    listChat:[],
+    listChat:Menssage[],
+    user:User,
+    showNewChat:boolean,
     handleActiveChat:(data:ProfileChat) => void,
     handleAddMenssage:() => void,
+    handleShowNewChat:() => void,
 }
 
 const ChatOnlineContext = createContext<ChatOnlineContextData>({} as ChatOnlineContextData);
@@ -36,7 +39,9 @@ export function ChatOnlineProvider({ children }: ChatOnlineProps): JSX.Element {
       avatar:'https://images.vexels.com/media/users/3/145908/raw/52eabf633ca6414e60a7677b0b917d92-criador-de-avatar-masculino.jpg'
       }]);
     const [activeChat , setActiveChat] = useState({} as ProfileChat);
-    const [listChat , setListChat ] = useState([] as []);
+    const [listChat , setListChat ] = useState([] as Menssage[]);
+    const [user , setUser] = useState({} as User);
+    const [showNewChat , setShowNewChat] = useState(false);
     
     const handleActiveChat = (data:ProfileChat) => {
       setActiveChat(data);
@@ -45,10 +50,14 @@ export function ChatOnlineProvider({ children }: ChatOnlineProps): JSX.Element {
     const handleAddMenssage = () => {
       //setListChat();
     }
+
+    const handleShowNewChat = () => {
+      setShowNewChat(!showNewChat);
+    }
  
     return (
     <ChatOnlineContext.Provider 
-      value={{ ProfilechatList , activeChat , listChat , handleActiveChat , handleAddMenssage }}>
+      value={{ ProfilechatList , activeChat , listChat , user , showNewChat , handleActiveChat , handleAddMenssage , handleShowNewChat}}>
       {children}
     </ChatOnlineContext.Provider>
   );

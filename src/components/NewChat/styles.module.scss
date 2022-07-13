@@ -1,0 +1,68 @@
+.newChat{
+    width: 35%;
+    max-width: 415px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: #FFF;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #DDD;
+    transition: all ease .8s;
+}
+.header{
+    display: flex;
+    background-color: #00bfa5;
+    align-items: center;
+    padding: 4rem 1rem 1rem 1rem;
+}
+.btnBack{
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.title{
+    font-size: 19px;
+    height: 40px;
+    line-height: 40px;
+    flex:1;
+    font-weight: bold;
+    color:#FFF;
+    margin-left: 20px;
+}
+.list{
+    flex: 1;
+    overflow-y: auto;
+    &::-webkit-scrollbar{
+        width: 6px;
+        height: 6px;
+    }
+    &::-webkit-scrollbar-thumb{
+        background-color: rgba(0,0,0,.2);
+    }
+}
+
+.item{
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    cursor: pointer;
+    img{
+        width: 50px;
+        height: 50%;
+        border-radius: 50%;
+    }
+    &:hover{
+        background-color: #f5f5f5;
+    }
+}
+
+.itemTitle{
+    font-size: 17px;
+    color:#000;
+}

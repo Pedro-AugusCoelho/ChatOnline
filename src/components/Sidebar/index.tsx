@@ -4,8 +4,11 @@ import ChatIcon from '@mui/icons-material/Chat';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SearchIcon from '@mui/icons-material/Search';
 import { ChatListItem } from '../ChatListItem';
+import { useChatOnline } from '../../Provider';
 
 export const Sidebar = () => {
+
+    const {handleShowNewChat} = useChatOnline();
     
     return(
         
@@ -20,7 +23,7 @@ export const Sidebar = () => {
                             <DonutLargeIcon style={{color:'#919191'}} />
                         </div>
 
-                        <div className={styles.Btn}>
+                        <div className={styles.Btn} onClick={handleShowNewChat}>
                             <ChatIcon style={{color:'#919191'}} />
                         </div>
 

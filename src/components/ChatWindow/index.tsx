@@ -13,7 +13,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import SendIcon from '@material-ui/icons/Send';
 
 //Hooks
-import { useState } from 'react';
+import React , { useState , useEffect, useRef } from 'react';
 
 //Components
 import { MessageItem } from '../MessageItem';
@@ -21,7 +21,20 @@ import { MessageItem } from '../MessageItem';
 //Types
 import { EmojiType } from '../../types';
 
+//ContextAPI
+import { useChatOnline } from '../../Provider';
+
 export const ChatWindow = () => {
+
+    const body = React.useRef() as React.MutableRefObject<HTMLInputElement>;
+    
+    const { user , listChat } = useChatOnline();
+
+    useEffect(() => {
+        if(body.current.scrollHeight > body.current.offsetHeight){
+            body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight;
+        }
+    },[listChat]);
 
     const [text , setText ] = useState('');
     const [emojiOpen, setEmojiOpen] = useState(false);
@@ -46,10 +59,9 @@ export const ChatWindow = () => {
         
         <div className={styles.chatWindow}>
             <div className={styles.chatWindowHeader}>
-            
                 <div className={styles.HeaderInfo}>
-                    <img src="https://images.vexels.com/media/users/3/145908/raw/52eabf633ca6414e60a7677b0b917d92-criador-de-avatar-masculino.jpg" alt="" />
-                    <div className={styles.HeaderName}>Bonieky Lacerda</div>
+                    <img src={user.avatar} alt="Avatar" />
+                    <div className={styles.HeaderName}>{user.name}</div>
                 </div>
                 
                 <div className={styles.HeaderBtns}>
@@ -70,7 +82,7 @@ export const ChatWindow = () => {
             
             </div>
             
-            <div className={styles.chatWindowBody}>
+            <div ref={body} className={styles.chatWindowBody}>
                 <MessageItem/>
             </div>
 
