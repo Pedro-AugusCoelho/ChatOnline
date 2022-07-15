@@ -8,16 +8,13 @@ import { useChatOnline } from '../../Provider';
 
 export const Sidebar = () => {
 
-    const {handleShowNewChat} = useChatOnline();
+    const {handleShowNewChat , user } = useChatOnline();
     
     return(
         
             <div className={styles.sidebar}>
                 <header>
-                    <img 
-                        src="https://images.vexels.com/media/users/3/145908/raw/52eabf633ca6414e60a7677b0b917d92-criador-de-avatar-masculino.jpg" 
-                        alt=""
-                    />
+                    <img src={user.avatar as string} alt="Avatar" />
                     <div className={styles.Buttons}>
                         <div className={styles.Btn}>
                             <DonutLargeIcon style={{color:'#919191'}} />

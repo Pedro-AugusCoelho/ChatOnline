@@ -1,5 +1,7 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { createContext, ReactNode, useContext, useState } from 'react';
 import { Menssage, ProfileChat, User } from '../types';
+import Api from '../Services/ApiFirebase';
+import { UserCredential } from 'firebase/auth';
 
 
 interface ChatOnlineProps {
@@ -15,6 +17,7 @@ interface ChatOnlineContextData {
     handleActiveChat:(data:ProfileChat) => void,
     handleAddMenssage:() => void,
     handleShowNewChat:() => void,
+    handleGoogleLogin:() => void,
 }
 
 const ChatOnlineContext = createContext<ChatOnlineContextData>({} as ChatOnlineContextData);
@@ -54,10 +57,28 @@ export function ChatOnlineProvider({ children }: ChatOnlineProps): JSX.Element {
     const handleShowNewChat = () => {
       setShowNewChat(!showNewChat);
     }
+
+    const handleGoogleLogin = async () => {
+        let result = await Api.GooglePopup();
+        
+        if(result){
+          
+          const NewUser = {
+            id:result.user.uid,
+            name:result.user.displayName,
+            avatar:result.user.photoURL,
+          }
+
+          setUser(NewUser);
+        
+        }else{
+            alert('erro');
+        }
+    } 
  
     return (
     <ChatOnlineContext.Provider 
-      value={{ ProfilechatList , activeChat , listChat , user , showNewChat , handleActiveChat , handleAddMenssage , handleShowNewChat}}>
+      value={{ ProfilechatList , activeChat , listChat , user , showNewChat , handleActiveChat , handleAddMenssage , handleShowNewChat, handleGoogleLogin}}>
       {children}
     </ChatOnlineContext.Provider>
   );
