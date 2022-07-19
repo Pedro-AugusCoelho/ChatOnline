@@ -12,8 +12,8 @@ export const ContentArea = () => {
     return(
         
         <div className={styles.contentArea}>
-            {activeChat.chatId !== undefined && <ChatWindow />}
-            {activeChat.chatId === undefined && <Chatintro />}
+            {activeChat.id !== undefined && <ChatWindow />}
+            {activeChat.id === undefined && <Chatintro />}
         </div>
 
     ); 

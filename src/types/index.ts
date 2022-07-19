@@ -1,5 +1,5 @@
 export type ProfileChat = {
-    chatId:string,
+    id:string,
     title:string,
     avatar:string,
 }

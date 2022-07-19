@@ -1,8 +1,6 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
 import { Menssage, ProfileChat, User } from '../types';
 import Api from '../Services/ApiFirebase';
-import { UserCredential } from 'firebase/auth';
-
 
 interface ChatOnlineProps {
   children: ReactNode;
@@ -24,27 +22,24 @@ const ChatOnlineContext = createContext<ChatOnlineContextData>({} as ChatOnlineC
 
 export function ChatOnlineProvider({ children }: ChatOnlineProps): JSX.Element {
   
-    const [ProfilechatList , setProfileChatList] = useState([{
-      chatId:'1',
-      title:'Joao A.',
-      avatar:'https://images.vexels.com/media/users/3/145908/raw/52eabf633ca6414e60a7677b0b917d92-criador-de-avatar-masculino.jpg'
-      },
-      
-      {
-      chatId:'2',
-      title:'Pedro A.',
-      avatar:'https://images.vexels.com/media/users/3/145908/raw/52eabf633ca6414e60a7677b0b917d92-criador-de-avatar-masculino.jpg'
-      },
-      
-      {
-      chatId:'3',
-      title:'Ana A.',
-      avatar:'https://images.vexels.com/media/users/3/145908/raw/52eabf633ca6414e60a7677b0b917d92-criador-de-avatar-masculino.jpg'
-      }]);
+    const [ProfilechatList , setProfileChatList] = useState([] as ProfileChat[]);
     const [activeChat , setActiveChat] = useState({} as ProfileChat);
     const [listChat , setListChat ] = useState([] as Menssage[]);
     const [user , setUser] = useState({} as User);
     const [showNewChat , setShowNewChat] = useState(false);
+    
+    //Parei Aqui
+    useEffect(() => {
+      const handleGetProfiles = async () => {
+        let result:ProfileChat[] | undefined = await Api.getContactList(user.id);
+        if(result){
+          setProfileChatList(result);
+        }
+      }
+      handleGetProfiles();
+    },[user]);
+    
+    console.log(ProfilechatList);
     
     const handleActiveChat = (data:ProfileChat) => {
       setActiveChat(data);
@@ -60,17 +55,14 @@ export function ChatOnlineProvider({ children }: ChatOnlineProps): JSX.Element {
 
     const handleGoogleLogin = async () => {
         let result = await Api.GooglePopup();
-        
         if(result){
-          
           const NewUser = {
             id:result.user.uid,
             name:result.user.displayName,
             avatar:result.user.photoURL,
           }
-
+          await Api.addUser(NewUser);
           setUser(NewUser);
-        
         }else{
             alert('erro');
         }

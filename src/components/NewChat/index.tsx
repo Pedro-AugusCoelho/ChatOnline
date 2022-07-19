@@ -23,7 +23,7 @@ export const NewChat = () => {
 
             <div className={styles.list}>
                 {ProfilechatList.map((item) => (
-                    <div className={styles.item} key={item.chatId}>
+                    <div className={styles.item} key={item.id}>
                         <img src={item.avatar} alt='Avatar' />
                         <div className={styles.itemTitle}>{item.title}</div>
                     </div>

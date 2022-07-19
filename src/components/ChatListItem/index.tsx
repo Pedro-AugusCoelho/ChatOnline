@@ -11,7 +11,7 @@ export const ChatListItem = () => {
             {ProfilechatList.map((item , k) => (
                 <div 
                     key={k}
-                    className={`${styles.chatListItem} ${item.chatId === activeChat.chatId ? styles.active : ''}`} 
+                    className={`${styles.chatListItem} ${item.id === activeChat.id ? styles.active : ''}`} 
                     onClick={() => handleActiveChat(ProfilechatList[k])}
                 >
                     
