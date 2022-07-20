@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-import { Menssage, ProfileChat, User } from '../types';
+import { Menssage, User } from '../types';
 import Api from '../Services/ApiFirebase';
 
 interface ChatOnlineProps {
@@ -7,12 +7,12 @@ interface ChatOnlineProps {
 }
 
 interface ChatOnlineContextData {
-    ProfilechatList:ProfileChat[],
-    activeChat:ProfileChat,
+    ProfilechatList:User[],
+    activeChat:User,
     listChat:Menssage[],
     user:User,
     showNewChat:boolean,
-    handleActiveChat:(data:ProfileChat) => void,
+    handleActiveChat:(data:User) => void,
     handleAddMenssage:() => void,
     handleShowNewChat:() => void,
     handleGoogleLogin:() => void,
@@ -22,8 +22,8 @@ const ChatOnlineContext = createContext<ChatOnlineContextData>({} as ChatOnlineC
 
 export function ChatOnlineProvider({ children }: ChatOnlineProps): JSX.Element {
   
-    const [ProfilechatList , setProfileChatList] = useState([] as ProfileChat[]);
-    const [activeChat , setActiveChat] = useState({} as ProfileChat);
+    const [ProfilechatList , setProfileChatList] = useState([] as User[]);
+    const [activeChat , setActiveChat] = useState({} as User);
     const [listChat , setListChat ] = useState([] as Menssage[]);
     const [user , setUser] = useState({} as User);
     const [showNewChat , setShowNewChat] = useState(false);
@@ -31,7 +31,7 @@ export function ChatOnlineProvider({ children }: ChatOnlineProps): JSX.Element {
     //Parei Aqui
     useEffect(() => {
       const handleGetProfiles = async () => {
-        let result:ProfileChat[] | undefined = await Api.getContactList(user.id);
+        let result = await Api.getContactList(user.id);
         if(result){
           setProfileChatList(result);
         }
@@ -41,7 +41,7 @@ export function ChatOnlineProvider({ children }: ChatOnlineProps): JSX.Element {
     
     console.log(ProfilechatList);
     
-    const handleActiveChat = (data:ProfileChat) => {
+    const handleActiveChat = (data:User) => {
       setActiveChat(data);
     }
 

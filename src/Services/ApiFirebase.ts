@@ -1,15 +1,17 @@
 import { initializeApp } from 'firebase/app';
-import { getFirestore , setDoc, doc, getDoc, DocumentSnapshot, DocumentData } from 'firebase/firestore/lite';
 
+import { doc, setDoc , getFirestore, getDoc, collection, getDocs } from "firebase/firestore";
 import { getAuth, signInWithPopup } from 'firebase/auth';
 import { GoogleAuthProvider } from "firebase/auth";
 
 import { firebaseConfig } from './ConfigFirebase';
-import { ProfileChat, User } from '../types';
+import { User } from '../types';
+import { dialogClasses } from '@mui/material';
 
 const firebaseApp = initializeApp(firebaseConfig);
 
 const db = getFirestore(firebaseApp);
+const colRef = collection(db, "users");
 const auth = getAuth();
 
 
@@ -26,7 +28,7 @@ export default {
     },
     addUser: async(u:User) =>{
         try {
-            await setDoc(doc(db, "users", u.id),{
+            await setDoc(doc(colRef, u.id),{
               name: u.name,
               avatar:u.avatar
             },{merge:true}); 
@@ -37,15 +39,25 @@ export default {
     },
     getContactList: async(UserId:string) => {
         try{
-            let list = [];
-            let results:DocumentData | undefined = await (await getDoc(doc(db, "users"))).data();
-            if(results){
-                let response = results ? results.filter((item:User) => item.id !== UserId) : results;
-                list.push(response);
-                return list;
-            }
+            let list:User[] = [];
+            let results = await getDocs(colRef);
+            const data = results.docs.map(doc => {
+                const response = doc.data();
+                if(doc.id !== UserId){
+                    list.push({
+                        id:doc.id,
+                        name:response.name,
+                        avatar:response.avatar,
+                    })
+                }
+            });
+            return list;
         }catch(err){
             console.error('Error writing users to Firebase Database', err);
         }
     }
+}
+
+function item(item: any, arg1: (any: any) => void) {
+    throw new Error('Function not implemented.');
 }
