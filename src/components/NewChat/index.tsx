@@ -5,27 +5,27 @@ import { useChatOnline } from '../../Provider';
 
 export const NewChat = () => {
 
-    const { ProfilechatList , handleShowNewChat , showNewChat } = useChatOnline();
+    const { allUsersApp , handleIsShowAddFriend , isShowAddFriend } = useChatOnline();
     
     return(
     
         <div 
         className={styles.newChat}
-        style={{left:showNewChat ? '0' : '-415px' }}
+        style={{left:isShowAddFriend ? '0' : '-415px' }}
         >
             
             <div className={styles.header}>
-                <div className={styles.btnBack} onClick={handleShowNewChat}>
+                <div className={styles.btnBack} onClick={handleIsShowAddFriend}>
                     <ArrowBackIcon style={{color:'#fff'}} /> 
                 </div>
                 <div className={styles.title}>Nova Conversa</div>
             </div> 
 
             <div className={styles.list}>
-                {ProfilechatList.map((item) => (
+                {allUsersApp.map((item) => (
                     <div className={styles.item} key={item.id}>
                         <img src={item.avatar} alt='Avatar' />
-                        <div className={styles.itemTitle}>{item.title}</div>
+                        <div className={styles.itemTitle}>{item.name}</div>
                     </div>
                 
                 ))

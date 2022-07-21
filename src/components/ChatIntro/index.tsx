@@ -1,5 +1,3 @@
-
-import { style } from '@mui/system';
 import styles from './styles.module.scss';
 
 export const Chatintro = () => {

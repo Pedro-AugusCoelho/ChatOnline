@@ -7,13 +7,13 @@ import styles from './styles.module.scss';
 
 export const ContentArea = () => {
 
-    const { activeChat } = useChatOnline();
+    const { isActiveFriend } = useChatOnline();
     
     return(
         
         <div className={styles.contentArea}>
-            {activeChat.id !== undefined && <ChatWindow />}
-            {activeChat.id === undefined && <Chatintro />}
+            {isActiveFriend.id !== undefined && <ChatWindow />}
+            {isActiveFriend.id === undefined && <Chatintro />}
         </div>
 
     ); 

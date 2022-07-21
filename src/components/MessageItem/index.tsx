@@ -7,11 +7,11 @@ import { useChatOnline } from "../../Provider"
 
 export const MessageItem = () => {
     
-    const { listChat , user } = useChatOnline();
+    const { listMenssage , user } = useChatOnline();
 
     return(
         <>
-        {listChat.map((item,k) => (
+        {listMenssage.map((item,k) => (
             <div 
                 key={k} 
                 className={styles.menssageLine} 

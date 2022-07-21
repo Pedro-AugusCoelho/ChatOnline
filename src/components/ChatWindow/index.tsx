@@ -28,13 +28,13 @@ export const ChatWindow = () => {
 
     const body = React.useRef() as React.MutableRefObject<HTMLInputElement>;
     
-    const { user , listChat } = useChatOnline();
+    const { user , listMenssage } = useChatOnline();
 
     useEffect(() => {
         if(body.current.scrollHeight > body.current.offsetHeight){
             body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight;
         }
-    },[listChat]);
+    },[listMenssage]);
 
     const [text , setText ] = useState('');
     const [emojiOpen, setEmojiOpen] = useState(false);

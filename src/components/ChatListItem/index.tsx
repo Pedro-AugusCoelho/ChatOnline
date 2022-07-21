@@ -3,16 +3,18 @@ import styles from './styles.module.scss';
 
 export const ChatListItem = () => {
     
-    const {ProfilechatList , handleActiveChat , activeChat } = useChatOnline();
-    
+    const {friend, isActiveFriend, handleIsActiveFriend } = useChatOnline();
+
+    console.log(friend);
+
     return(
         <div className={styles.chatList}>
             
-            {ProfilechatList.map((item , k) => (
+            {friend.map((item , k) => (
                 <div 
                     key={k}
-                    className={`${styles.chatListItem} ${item.id === activeChat.id ? styles.active : ''}`} 
-                    onClick={() => handleActiveChat(ProfilechatList[k])}
+                    className={`${styles.chatListItem} ${item.id === isActiveFriend.id ? styles.active : ''}`} 
+                    onClick={() => handleIsActiveFriend(friend[k])}
                 >
                     
                     <img 
@@ -23,7 +25,7 @@ export const ChatListItem = () => {
                     <div className={styles.chatListItemLines}>
                         
                         <div className={styles.chatListItemLine}>
-                            <div className={styles.chatListItemName}>{item.title}</div>
+                            <div className={styles.chatListItemName}>{item.name}</div>
                             <div className={styles.chatListItemDate}>19:00</div>
                         </div>
 

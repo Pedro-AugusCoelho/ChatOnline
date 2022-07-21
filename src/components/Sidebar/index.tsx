@@ -8,19 +8,19 @@ import { useChatOnline } from '../../Provider';
 
 export const Sidebar = () => {
 
-    const {handleShowNewChat , user } = useChatOnline();
+    const {handleIsShowAddFriend , user } = useChatOnline();
     
     return(
         
             <div className={styles.sidebar}>
                 <header>
-                    <img src={user.avatar as string} alt="Avatar" />
+                    <img src={user.avatar} alt="Avatar" />
                     <div className={styles.Buttons}>
                         <div className={styles.Btn}>
                             <DonutLargeIcon style={{color:'#919191'}} />
                         </div>
 
-                        <div className={styles.Btn} onClick={handleShowNewChat}>
+                        <div className={styles.Btn} onClick={handleIsShowAddFriend}>
                             <ChatIcon style={{color:'#919191'}} />
                         </div>
 
@@ -45,10 +45,7 @@ export const Sidebar = () => {
                     </div>
                 </div>
                 
-                <ChatListItem/>
-                
-            
-            
+                <ChatListItem />
             
             </div>
 

@@ -10,6 +10,6 @@ export type Menssage = {
 
 export type User = {
     id: string;
-    avatar:string | null;
-    name: string | null;
+    avatar:string;
+    name: string;
 }

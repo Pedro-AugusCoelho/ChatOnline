@@ -7,14 +7,16 @@ interface ChatOnlineProps {
 }
 
 interface ChatOnlineContextData {
-    ProfilechatList:User[],
-    activeChat:User,
-    listChat:Menssage[],
+    allUsersApp:User[],
     user:User,
-    showNewChat:boolean,
-    handleActiveChat:(data:User) => void,
+    friend:User[],
+    isActiveFriend:User,
+    
+    listMenssage:Menssage[],
+    isShowAddFriend:boolean,
+    handleIsActiveFriend:(data:User) => void,
     handleAddMenssage:() => void,
-    handleShowNewChat:() => void,
+    handleIsShowAddFriend:() => void,
     handleGoogleLogin:() => void,
 }
 
@@ -22,55 +24,66 @@ const ChatOnlineContext = createContext<ChatOnlineContextData>({} as ChatOnlineC
 
 export function ChatOnlineProvider({ children }: ChatOnlineProps): JSX.Element {
   
-    const [ProfilechatList , setProfileChatList] = useState([] as User[]);
-    const [activeChat , setActiveChat] = useState({} as User);
-    const [listChat , setListChat ] = useState([] as Menssage[]);
-    const [user , setUser] = useState({} as User);
-    const [showNewChat , setShowNewChat] = useState(false);
+    //Usuários
+    const [ allUsersApp , setAllUsersApp ] = useState([] as User[]);
+    const [ friend , setFriend ] = useState({} as User[]);
+    const [ user , setUser ] = useState({} as User);
     
-    //Parei Aqui
+    //Amigo em que se está conversando
+    const [ isActiveFriend , setIsActiveFriend ] = useState({} as User);
+
+    //Lista de menssagens referentes ao "isActiveFriend"
+    const [ listMenssage , setListMenssage ] = useState([] as Menssage[])
+    
+    //Modal para Adicionar novo usuário a sua lista de amigos
+    const [ isShowAddFriend , setIsShowAddFriend ] = useState(false);
+    
+
+    const handleGoogleLogin = async () => {
+      try{
+        let res = await Api.GooglePopup();
+        if(res){
+          await Api.addUser(res);
+          setUser(res);
+        }
+      }catch(err){
+        console.log(err);
+      }
+    } 
+    
+    const handleIsActiveFriend = (data:User) => {
+      setIsActiveFriend(data);
+    }
+
+    const handleAddMenssage = () => {
+      //setListMenssage();
+    }
+
+    const handleIsShowAddFriend = () => {
+      setIsShowAddFriend(!isShowAddFriend);
+    }
+
     useEffect(() => {
       const handleGetProfiles = async () => {
-        let result = await Api.getContactList(user.id);
-        if(result){
-          setProfileChatList(result);
+        let ResUser = await Api.getContactList(user.id);
+        let Resfriends = await Api.getFriendList();
+        if(ResUser){
+          setAllUsersApp(ResUser);
+        }
+        if(Resfriends){
+          setFriend(Resfriends);
         }
       }
       handleGetProfiles();
     },[user]);
-    
-    console.log(ProfilechatList);
-    
-    const handleActiveChat = (data:User) => {
-      setActiveChat(data);
-    }
-
-    const handleAddMenssage = () => {
-      //setListChat();
-    }
-
-    const handleShowNewChat = () => {
-      setShowNewChat(!showNewChat);
-    }
-
-    const handleGoogleLogin = async () => {
-        let result = await Api.GooglePopup();
-        if(result){
-          const NewUser = {
-            id:result.user.uid,
-            name:result.user.displayName,
-            avatar:result.user.photoURL,
-          }
-          await Api.addUser(NewUser);
-          setUser(NewUser);
-        }else{
-            alert('erro');
-        }
-    } 
  
     return (
     <ChatOnlineContext.Provider 
-      value={{ ProfilechatList , activeChat , listChat , user , showNewChat , handleActiveChat , handleAddMenssage , handleShowNewChat, handleGoogleLogin}}>
+      value={{
+        allUsersApp, user, friend, isActiveFriend, isShowAddFriend, listMenssage,
+        handleGoogleLogin, handleIsActiveFriend, handleAddMenssage, handleIsShowAddFriend
+      }}
+      >
       {children}
     </ChatOnlineContext.Provider>
   );

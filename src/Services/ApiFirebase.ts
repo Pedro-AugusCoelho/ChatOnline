@@ -11,7 +11,8 @@ import { dialogClasses } from '@mui/material';
 const firebaseApp = initializeApp(firebaseConfig);
 
 const db = getFirestore(firebaseApp);
-const colRef = collection(db, "users");
+const colRefUsers = collection(db, "users");
+const colRefFriend = collection(db , 'friend');
 const auth = getAuth();
 
 
@@ -19,16 +20,24 @@ const auth = getAuth();
 export default {
     GooglePopup: async () => {
         try{
+            let data = {}
             const provider = new GoogleAuthProvider();
             let result = await signInWithPopup(auth , provider);
-            return result;
+            if(result){
+                let data = {
+                    id:result.user.uid,
+                    name:result.user.displayName ? result.user.displayName  : 'Minion' ,
+                    avatar:result.user.photoURL ? result.user.photoURL : 'https://lh3.googleusercontent.com/a-/AFdZucr8PnqOaNb_sAS-JgTxtfqJ9SOFC5iZVIFumczB1sA=s96-c',
+                }
+                return data;
+            }
         }catch(err){
             console.error('Error writing new user to Firebase Database', err);
         }
     },
     addUser: async(u:User) =>{
         try {
-            await setDoc(doc(colRef, u.id),{
+            await setDoc(doc(colRefUsers, u.id),{
               name: u.name,
               avatar:u.avatar
             },{merge:true}); 
@@ -40,8 +49,8 @@ export default {
     getContactList: async(UserId:string) => {
         try{
             let list:User[] = [];
-            let results = await getDocs(colRef);
-            const data = results.docs.map(doc => {
+            let results = await getDocs(colRefUsers);
+            results.docs.map(doc => {
                 const response = doc.data();
                 if(doc.id !== UserId){
                     list.push({
@@ -54,6 +63,24 @@ export default {
             return list;
         }catch(err){
             console.error('Error writing users to Firebase Database', err);
+        }
+    },
+    getFriendList: async() =>{
+        try {
+            let list:User[] = [];
+            let results = await getDocs(colRefFriend);
+            results.docs.map(doc => {
+            const response = doc.data();
+                list.push({
+                    id:doc.id,
+                    name:response.name,
+                    avatar:response.avatar,
+                });
+            });
+            return list;
+        
+        }catch(error){
+            
         }
     }
 }
