@@ -13,21 +13,32 @@
     justify-content: center;
     max-width: 600px;
     width: 100%;
-    button{
-        outline: 0;
-        border: 0;
-        border-radius: .5rem;
-        background-color:$cyan-600;
-        cursor: pointer;
-        transition: ease all .5s;
-        &:hover{
-            background-color:$cyan-800;
-        }
-        p{
-            color:$bg-gray-25;
-            font-size: 18px;
-            font-weight: bold;
-            margin: 1rem;
-        }
+}
+
+.BoxForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    background-color: $cyan-800;
+    color:$bg-gray-75;
+    border-radius: .5rem;
+    form{
+        width: 100%;
+        padding: 2rem;
+    }
+
+}
+
+.btn{
+    width: 100%;
+    height: 40px;
+    text-transform: uppercase;
+    color:$bg-gray-75;
+    font-size: 1rem;
+    font-weight: 700;
+    &:hover{
+        filter: brightness(.9);
     }
 }

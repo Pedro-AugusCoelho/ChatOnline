@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
+import { createContext, FormEvent, ReactNode, useContext, useEffect, useState } from 'react';
 import { Menssage, User } from '../types';
 import Api from '../Services/ApiFirebase';
 
@@ -17,7 +17,8 @@ interface ChatOnlineContextData {
     handleIsActiveFriend:(data:User) => void,
     handleAddMenssage:() => void,
     handleIsShowAddFriend:() => void,
-    handleGoogleLogin:() => void,
+    handleGoogleSignIn:() => void,
+    handleGoogleSignInEmail:(e:FormEvent<HTMLElement>) => void;
 }
 
 const ChatOnlineContext = createContext<ChatOnlineContextData>({} as ChatOnlineContextData);
@@ -39,7 +40,7 @@ export function ChatOnlineProvider({ children }: ChatOnlineProps): JSX.Element {
     const [ isShowAddFriend , setIsShowAddFriend ] = useState(false);
     
 
-    const handleGoogleLogin = async () => {
+    const handleGoogleSignIn = async () => {
       try{
         let res = await Api.GooglePopup();
         if(res){
@@ -50,6 +51,10 @@ export function ChatOnlineProvider({ children }: ChatOnlineProps): JSX.Element {
         console.log(err);
       }
     } 
+
+    const handleGoogleSignInEmail = async (e:FormEvent<HTMLElement>) => {
+      e.preventDefault();
+    }
     
     const handleIsActiveFriend = (data:User) => {
       setIsActiveFriend(data);
@@ -81,7 +86,7 @@ export function ChatOnlineProvider({ children }: ChatOnlineProps): JSX.Element {
     <ChatOnlineContext.Provider 
       value={{
         allUsersApp, user, friend, isActiveFriend, isShowAddFriend, listMenssage,
-        handleGoogleLogin, handleIsActiveFriend, handleAddMenssage, handleIsShowAddFriend
+        handleGoogleSignIn, handleIsActiveFriend, handleAddMenssage, handleIsShowAddFriend, handleGoogleSignInEmail
       }}
       >
       {children}
