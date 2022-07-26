@@ -46,6 +46,16 @@ export default {
             console.error('Error writing new user to Firebase Database', err);
           }
     },
+    addFriend: async(data:User) =>{
+        try{
+            await setDoc(doc(colRefFriend , data.id),{
+                name:data.name,
+                avatar:data.avatar
+            },{merge:true});
+        }catch(err){
+            console.error('Error writing new friend to Firebase Database', err);
+        }
+    },
     getContactList: async(UserId:string) => {
         try{
             let list:User[] = [];
@@ -85,6 +95,3 @@ export default {
     }
 }
 
-function item(item: any, arg1: (any: any) => void) {
-    throw new Error('Function not implemented.');
-}

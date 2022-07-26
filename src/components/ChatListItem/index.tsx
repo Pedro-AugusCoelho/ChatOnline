@@ -5,8 +5,6 @@ export const ChatListItem = () => {
     
     const {friend, isActiveFriend, handleIsActiveFriend } = useChatOnline();
 
-    console.log(friend);
-
     return(
         <div className={styles.chatList}>
             

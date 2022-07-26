@@ -17,6 +17,7 @@ export const Login = () => {
                         <Input color='#E1E1E4' title='Senha' placeholder='*****' type='password'/>
                         <button className={styles.btn} type='submit'>Entrar</button>
                     </form>
+                    <button className={styles.btnGoogle} onClick={handleGoogleSignIn}>Continue com o google</button>
                 </div>
             
             </div>

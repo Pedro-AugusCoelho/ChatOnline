@@ -5,7 +5,7 @@ import { useChatOnline } from '../../Provider';
 
 export const NewChat = () => {
 
-    const { allUsersApp , handleIsShowAddFriend , isShowAddFriend } = useChatOnline();
+    const { allUsersApp , handleIsShowAddFriend, handleAddFriend , isShowAddFriend, friend } = useChatOnline();
     
     return(
     
@@ -23,11 +23,10 @@ export const NewChat = () => {
 
             <div className={styles.list}>
                 {allUsersApp.map((item) => (
-                    <div className={styles.item} key={item.id}>
+                    <div className={styles.item} key={item.id} onClick={e => handleAddFriend(item)}>
                         <img src={item.avatar} alt='Avatar' />
                         <div className={styles.itemTitle}>{item.name}</div>
                     </div>
-                
                 ))
                 }
             </div>

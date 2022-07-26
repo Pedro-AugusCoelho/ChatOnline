@@ -19,6 +19,7 @@ interface ChatOnlineContextData {
     handleIsShowAddFriend:() => void,
     handleGoogleSignIn:() => void,
     handleGoogleSignInEmail:(e:FormEvent<HTMLElement>) => void;
+    handleAddFriend:(data:User) => void;
 }
 
 const ChatOnlineContext = createContext<ChatOnlineContextData>({} as ChatOnlineContextData);
@@ -52,6 +53,10 @@ export function ChatOnlineProvider({ children }: ChatOnlineProps): JSX.Element {
       }
     } 
 
+    const handleAddFriend = async (data:User) => {
+      Api.addFriend(data);
+    } 
+
     const handleGoogleSignInEmail = async (e:FormEvent<HTMLElement>) => {
       e.preventDefault();
     }
@@ -71,22 +76,29 @@ export function ChatOnlineProvider({ children }: ChatOnlineProps): JSX.Element {
     useEffect(() => {
       const handleGetProfiles = async () => {
         let ResUser = await Api.getContactList(user.id);
-        let Resfriends = await Api.getFriendList();
-        if(ResUser){
-          setAllUsersApp(ResUser);
+          if(ResUser){
+            setAllUsersApp(ResUser);
+          }
         }
+      handleGetProfiles();
+    },[user , handleAddFriend]);
+
+    useEffect(() => {
+      const handleGetFriends = async() => {
+        let Resfriends = await Api.getFriendList();
         if(Resfriends){
           setFriend(Resfriends);
         }
       }
-      handleGetProfiles();
-    },[user]);
+      handleGetFriends();
+    },[handleAddFriend]);
  
     return (
     <ChatOnlineContext.Provider 
       value={{
         allUsersApp, user, friend, isActiveFriend, isShowAddFriend, listMenssage,
-        handleGoogleSignIn, handleIsActiveFriend, handleAddMenssage, handleIsShowAddFriend, handleGoogleSignInEmail
+        handleGoogleSignIn, handleIsActiveFriend, handleAddMenssage, handleIsShowAddFriend, handleGoogleSignInEmail,
+        handleAddFriend
       }}
       >
       {children}
